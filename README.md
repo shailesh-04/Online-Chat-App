@@ -74,8 +74,8 @@ chat-app/
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/your-username/chat-app.git
-   cd chat-app
+   https://github.com/shailesh-04/Online-Chat-App.git
+   cd Online-Chat-App
    ```
 
 2. Install dependencies:
@@ -84,7 +84,7 @@ chat-app/
    npm install
    ```
 
-3. Configure `.env` file for MongoDB/MySQL and session secrets.
+3. Configure `.env` file for MySQL and session secrets.
 
 4. Run the app:
 
