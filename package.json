@@ -1,0 +1,60 @@
+{
+    "name": "online-chat-app",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "it a online chat app to chat any user any person using username ",
+    "main": "index.js",
+    "scripts": {
+        "test": "test",
+        "migrate": "node ./src/database/migrations/migrate.js",
+        "dev": "nodemon index.js",
+        "start": "node index.js"
+    },
+    "imports": {
+        "#config/*": "./src/config/*",
+        "#controllers/*": "./src/controllers/*",
+        "#socketHandlers/*": "./src/socketHandlers/*",
+        "#models/*": "./src/database/models/*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/shailesh-04/Online-Chat-App.git"
+    },
+    "author": "shailesh makavana",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/shailesh-04/Online-Chat-App/issues"
+    },
+    "homepage": "https://github.com/shailesh-04/Online-Chat-App#readme",
+    "keywords": [
+        "chat",
+        "chat-app",
+        "online-chat",
+        "nodejs",
+        "socket.io",
+        "realtime",
+        "messaging",
+        "tailwindcss",
+        "html",
+        "authentication",
+        "email-auth",
+        "express",
+        "login",
+        "register",
+        "username-chat"
+    ],
+    "dependencies": {
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^16.5.0",
+        "ejs": "^3.1.10",
+        "express": "^5.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "mysql2": "^3.14.1",
+        "nodemailer": "^7.0.3",
+        "socket.io": "^4.8.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.10"
+    }
+}

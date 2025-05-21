@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App UI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+    .use-box{
+      height: 75%;
+      overflow-y: scroll;
+      display: flex;      
+      flex-direction: column;
+      gap: 5px;
+      & li{
+          background: #0559ff77;
+          border-radius: 10px;
+          padding: 10px;
+          display: flex;
+          gap: 3px;
+          color: #fff;
+        }
+      }
+      .onlineUser{
+        background: #0559ffaa !important;
+      }
+      .senderId{
+        color: #aaa;
+        font-size: 14px;
+      }
+    </style>
+     <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="bg-gray-100 h-screen flex">
+
+    <!-- Sidebar for users -->
+    <aside class="w-1/4 bg-white shadow-lg">
+        <div class="p-5 border-b">
+            <h2 class="text-lg font-semibold">Online Freind</h2>
+        </div>
+        <ul class="p-2 use-box" id="userlist">
+        
+        </ul>
+    </aside>
+
+    <!-- Chat box -->
+    <main class="flex-1 flex flex-col">
+      <header class=" bg-gray-200  flex items-center justify-between p-3">
+        <h1 class="text-2xl font-bold">My ChatApp</h1>
+        <div class="flex gap-4 items-center">
+          <h2 class="bg-gray-300 rounded-3xl text-center p-2 border-4 border-blue-300">
+            <%= user.name %>
+          </h2>
+          <a href="/logout" class="bg-gray-700 text-white p-3 rounded-full">LogOut</a>
+        </div>
+      </header>
+        <h2 class="bg-gray-300 rounded-3xl text-center p-2 border-4 border-blue-300" id="Sender">
+          Home
+        </h2>
+        <div class="flex-1 p-5 pt-2 overflow-y-auto">
+            <div class="chat-message mb-2 flex flex-col" id="chatBox">
+            </div>
+        </div>
+
+        <div class="p-4 bg-white border-t flex gap-4 p-3">
+            <input type="text" class="border border-gray-300 rounded-lg p-2 w-full" placeholder="Type your message..." id="inputBox">
+            <input type="button" class="p-3 bg-gray-300 rounded" value="Send" onclick="Send()">
+        </div>
+    </main>
+</body>
+<script>
+  const user = "<%= user.id %>";
+  var to = '';
+  var toUser = '';
+  const socket = io();
+  fetch(`http://localhost:3000/api/get`).
+  then(res=>res.json()).
+  then(res=>{
+    for(let item of res){
+      if(item.id==user) {
+        socket.emit('Login',{uid:user,userName:"<%= user.name %>"} );
+        continue;
+      }
+      const el = document.createElement('li');
+      el.setAttribute('id',`U${item.id}`);
+      el.innerHTML = `
+        <span class="Id">${item.id}</span>
+        <span class="Name" id='UID${item.id}'>${item.name}</span>
+      `;
+      document.getElementById('userlist').appendChild(el);
+    }
+  }).
+  catch(err=>{
+    alert(`Found Following ${err}`);
+  });
+  socket.on('user', function(users) {
+    for(let item of document.querySelectorAll("#userlist .onlineUser")){
+      item.classList.remove('onlineUser');
+    }
+    users.forEach(uid=>{
+      const userElement = document.getElementById(`U${uid}`);
+      if (userElement) {
+          userElement.classList.add('onlineUser');
+          userElement.addEventListener("click",(e)=>{
+            document.getElementById(`Sender`).innerHTML = document.querySelector(`#UID${uid}`).innerHTML;
+            to = uid;
+            toUser = document.getElementById(`UID${uid}`).innerHTML;
+        });
+      }
+    });
+  });
+  const input = document.getElementById('inputBox');
+  function Send(){
+    if (input.value && to && toUser) {
+      let message = input.value;
+      socket.emit('chat message', {to,message,data:{id:user,userName:toUser}});
+      input.value = '';
+    }
+  };
+  socket.on('chat message', function({message,sender,data}) {
+    const el = document.createElement('div');
+    el.innerHTML = `
+      <p class="senderId">${data}</p>
+      <p class="bg-blue-300 p-2 rounded-lg inline">
+        ${message}
+      </p>
+    `;
+    el.classList.add(sender?'text-right':'text-left','mt-4');
+    document.getElementById('chatBox').appendChild(el);
+  });
+</script>
+</html>

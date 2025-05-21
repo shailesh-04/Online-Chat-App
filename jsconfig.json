@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#config/*": ["src/config/*"],
+      "#models/*": ["src/database/models/*"],
+      "#controllers/*": ["src/controllers/*"],
+      "#socketHandlers": ["src/socketHandlers/*"]
+    },
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "checkJs": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/**/*", "index.js"],
+  "exclude": ["node_modules"]
+}
