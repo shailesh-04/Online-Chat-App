@@ -4,8 +4,8 @@ class AuthPublicController {
         try {
             const token = req.cookies.token;
             if (token) {
-                res.render("app.html", { user: token[0] });
-            } else res.render("index.html");
+                res.render("appNew", { user: token[0] });
+            } else res.render("index");
         } catch (error) {
             res.status(500).send({
                 message: "faild to geting this page, find server error",
@@ -16,7 +16,7 @@ class AuthPublicController {
     async login(req, res) {
         try {
             const rows = await auth.login(req.body);
-            if (rows.length > 0) {
+            if (rows?.length > 0) {
                 res.cookie("token", rows, { maxAge: 1 * 60 * 60 * 1000 });
                 res.redirect("/");
             } else {

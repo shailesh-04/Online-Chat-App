@@ -103,3 +103,9 @@ chat-app/
 ---
 
 Let me know if you want the actual code structure or a GitHub-ready version of this project scaffold!
+
+start app :
+server and app create,
+create database ;
+create backend;
+implement frontend;

@@ -5,7 +5,6 @@ import { fileURLToPath } from "url";
 import database from "#config/database.js";
 import router from "../routes/_index.js";
 import cookieParser from "cookie-parser";
-import { renderFile } from "ejs";
 import cors from 'cors';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.join(path.dirname(__filename), "../");
@@ -21,8 +20,8 @@ class App {
         config();
     }
     async middeware() {
-        this.app.use(express.static(path.join(__dirname, "public")));
-        this.app.engine("html",renderFile);
+        this.app.use(express.static(path.join(__dirname, "/views")));
+        this.app.set('view engine', 'ejs');
         this.app.set("views", path.join(__dirname,"views/"));
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());

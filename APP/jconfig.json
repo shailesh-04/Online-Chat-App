@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "ESNext",
+        "allowJs": true,
+        "checkJs": false,
+        "jsx": "react-jsx",
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths":{
+            "@components/*": ["src/components/*"]   
+        }  
+    },
+    "include": ["./src", "./public", "index.html"],
+    "exclude": ["node_modules", "build", "dist"]
+}

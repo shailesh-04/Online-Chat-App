@@ -44,6 +44,7 @@
         "username-chat"
     ],
     "dependencies": {
+        "04-utils": "file:../04Utils/04-utils-1.0.2.tgz",
         "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
         "dotenv": "^16.5.0",
