@@ -5,12 +5,12 @@
       "#config/*": ["src/config/*"],
       "#models/*": ["src/database/models/*"],
       "#controllers/*": ["src/controllers/*"],
+      "#middlewares/*": ["src/middlewares/*"],
       "#socketHandlers": ["src/socketHandlers/*"]
     },
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es2022",
-    "checkJs": true,
     "allowJs": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true

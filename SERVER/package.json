@@ -14,6 +14,7 @@
         "#config/*": "./src/config/*",
         "#controllers/*": "./src/controllers/*",
         "#socketHandlers/*": "./src/socketHandlers/*",
+        "#middlewares/*": "./src/middlewares/*",
         "#models/*": "./src/database/models/*"
     },
     "repository": {
@@ -45,6 +46,8 @@
     ],
     "dependencies": {
         "04-utils": "file:../04Utils/04-utils-1.0.2.tgz",
+        "bcrypt": "^6.0.0",
+        "body-parser": "^2.2.0",
         "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
         "dotenv": "^16.5.0",
