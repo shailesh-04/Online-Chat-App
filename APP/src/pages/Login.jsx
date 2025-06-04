@@ -1,7 +1,6 @@
 import React from 'react'
-
 export default function Login() {
   return (
-    <div>Login</div>
+    <div className='font-semibold text-red-100'>Login</div>
   )
 }

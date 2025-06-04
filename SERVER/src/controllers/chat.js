@@ -8,7 +8,6 @@ const getConversations = async (req, res) => {
         res.status(500).json({ message: 'Error fetching conversations', error });
     }
 };
-
 const getMessages = async (req, res) => {
     try {
         const { conversationId } = req.params;
@@ -18,7 +17,6 @@ const getMessages = async (req, res) => {
         res.status(500).json({ message: 'Error fetching messages', error });
     }
 };
-
 const sendMessage = async (req, res) => {
     try {
         const { conversationId, content } = req.body;
@@ -30,7 +28,6 @@ const sendMessage = async (req, res) => {
         res.status(500).json({ message: 'Error sending message', error });
     }
 };
-
 const startConversation = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -49,7 +46,6 @@ const startConversation = async (req, res) => {
         res.status(500).json({ message: 'Error starting conversation', error });
     }
 };
-
 const getContacts = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -59,7 +55,6 @@ const getContacts = async (req, res) => {
         res.status(500).json({ message: 'Error fetching contacts', error });
     }
 };
-
 const addContact = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -71,7 +66,6 @@ const addContact = async (req, res) => {
         res.status(500).json({ message: 'Error adding contact', error });
     }
 };
-
 export default {
     getConversations,
     getMessages,
