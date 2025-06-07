@@ -105,12 +105,7 @@ const ChatApp = () => {
 
   return (
     <div className="chat-app">
-      {/* Background Bubbles */}
-      <div className="bubbles">
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="bubble"></div>
-        ))}
-      </div>
+
       
       {/* Menu Toggle (Mobile) */}
       <button className="menu-toggle" onClick={toggleMenu}>

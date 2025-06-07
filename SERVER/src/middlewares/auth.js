@@ -1,16 +1,18 @@
-import jwt from "jsonwebtoken";
+import { verify } from "#services/jwt.js";
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
     try {
-        const token = req.header('Authorization')?.replace('Bearer ', '');
+        const token = req.cookies.token;
         if (!token) {
-            return res.status(401).json({ message: 'No token provided' }); 
+            return res
+                .status(401)
+                .json({ message: "No token provided in cookies" });
         }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = verify(token);
         req.user = decoded;
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Invalid token' });
+        res.status(401).json({ message: "Invalid token" });
     }
 };
 export default auth;

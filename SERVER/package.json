@@ -15,7 +15,8 @@
         "#controllers/*": "./src/controllers/*",
         "#socketHandlers/*": "./src/socketHandlers/*",
         "#middlewares/*": "./src/middlewares/*",
-        "#models/*": "./src/database/models/*"
+        "#models/*": "./src/database/models/*",
+        "#services/*": "./src/services/*"
     },
     "repository": {
         "type": "git",
@@ -54,6 +55,7 @@
         "ejs": "^3.1.10",
         "express": "^5.1.0",
         "jsonwebtoken": "^9.0.2",
+        "multer": "^2.0.1",
         "mysql2": "^3.14.1",
         "nodemailer": "^7.0.3",
         "socket.io": "^4.8.1"

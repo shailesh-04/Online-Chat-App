@@ -15,18 +15,22 @@ class Database {
         try {
             this.conn = await this.pool.getConnection();
             await this.conn.ping();
-            this.conn.release()    
-            console.log("successfuly connect database..")
+            this.conn.release();
+            console.log("successfuly connect database..");
         } catch (error) {
-            console.log('found error to connect database..')
+            console.log("found error to connect database..");
             console.error(error.message);
             process.exit(0);
         }
     }
-    async query(sql,params){
+    async query(sql, params) {
         const connection = await this.pool.getConnection();
-        const [result] = await connection.query(sql,params);
-        return result;
+        try {
+            const [result] = await connection.query(sql, params);
+            return result;
+        } finally {
+            connection.release();
+        }
     }
 }
 

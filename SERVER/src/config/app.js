@@ -19,15 +19,21 @@ class App {
     }
     async appConfig() {
         config();
+        this.app.set("view engine", "ejs");
+        this.app.set("views", path.join(__dirname, "views/"));
     }
     async middeware() {
         this.app.use(express.static(path.join(__dirname, "/views")));
-        this.app.set("view engine", "ejs");
-        this.app.set("views", path.join(__dirname, "views/"));
+        this.app.use("/assets", express.static(path.join(__dirname, "assets")));
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
         this.app.use(cookieParser(process.env.SECRET_KEY));
-        this.app.use(cors());
+        this.app.use(
+            cors({
+                origin: "http://localhost:5173", 
+                credentials: true,
+            })
+        );
         this.app.use(bodyParser.json());
         this.app.use((err, req, res, next) => {
             console.error(err.stack);

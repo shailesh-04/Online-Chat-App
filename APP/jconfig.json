@@ -3,13 +3,18 @@
         "target": "es6",
         "module": "ESNext",
         "allowJs": true,
-        "checkJs": false,
+        "checkJs": true,
         "jsx": "react-jsx",
         "moduleResolution": "node",
         "baseUrl": ".",
-        "paths":{
-            "@components/*": ["src/components/*"]   
-        }  
+        "paths": {
+            "@/*": ["src/*"],
+            "@components/*": ["src/components/*"],
+            "@pages/*": ["src/pages/*"],
+            "@utils/*": ["src/utils/*"],
+            "@context/*": ["src/context/*"],
+            "@services/*":["./src/services/*"]
+        }
     },
     "include": ["./src", "./public", "index.html"],
     "exclude": ["node_modules", "build", "dist"]

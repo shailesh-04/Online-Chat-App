@@ -7,6 +7,11 @@ try {
     router.use("/", auth);
     router.use("/api/user", users);
     router.use("/api/auth", authApi);
+    router.get("/api",(req,res)=>{
+        res.status(200).json({
+            message:"The Api Is Successfuy Connect With Frontend!."
+        });
+    });
 } catch (error) {
     console.error(
         " \x1b[1m error : ~/routes/_index.js \x1b[33m  \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n \x1b[0m",

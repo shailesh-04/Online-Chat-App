@@ -10,9 +10,9 @@ const io = new Server(server, {
         methods: ["GET", "POST"],
     },
 });
-let onlineUID = {};
+let online = {};
 io.on("connection", (socket) => {
-    new ChatHandler(io,socket,onlineUID);
+    new ChatHandler(io, socket, online);
 });
 
 export default io;

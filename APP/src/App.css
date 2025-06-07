@@ -36,69 +36,6 @@
     animation: rise 15s infinite ease-in;
 }
 
-.bubble:nth-child(1) {
-    width: 40px;
-    height: 40px;
-    left: 10%;
-    animation-duration: 8s;
-}
-
-.bubble:nth-child(2) {
-    width: 20px;
-    height: 20px;
-    left: 20%;
-    animation-duration: 5s;
-    animation-delay: 1s;
-}
-
-.bubble:nth-child(3) {
-    width: 50px;
-    height: 50px;
-    left: 35%;
-    animation-duration: 7s;
-    animation-delay: 2s;
-}
-
-.bubble:nth-child(4) {
-    width: 80px;
-    height: 80px;
-    left: 50%;
-    animation-duration: 11s;
-    animation-delay: 0s;
-}
-
-.bubble:nth-child(5) {
-    width: 35px;
-    height: 35px;
-    left: 55%;
-    animation-duration: 6s;
-    animation-delay: 1s;
-}
-
-.bubble:nth-child(6) {
-    width: 45px;
-    height: 45px;
-    left: 65%;
-    animation-duration: 8s;
-    animation-delay: 3s;
-}
-
-.bubble:nth-child(7) {
-    width: 25px;
-    height: 25px;
-    left: 75%;
-    animation-duration: 7s;
-    animation-delay: 2s;
-}
-
-.bubble:nth-child(8) {
-    width: 80px;
-    height: 80px;
-    left: 80%;
-    animation-duration: 6s;
-    animation-delay: 1s;
-}
-
 @keyframes rise {
     0% {
         bottom: -100px;
@@ -563,4 +500,17 @@
 
 input#messageInput::placeholder {
     color: #ddd;
+}
+/* Add to your App.css or create a new CSS file */
+.not-found-container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.not-found-card {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
