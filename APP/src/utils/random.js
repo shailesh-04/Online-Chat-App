@@ -4,3 +4,5 @@ export function random(min,max){
 	randomNum = Math.floor(randomNum); 	
 	return randomNum;
 }
+
+export default random;

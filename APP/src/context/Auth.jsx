@@ -17,11 +17,13 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [token, setToken] = useState("");
 
     const loginUser = async (userData) => {
         try {
             const data = await login(userData);
             setUser(data.user);
+            setToken(data.tokenChat);
             setIsAuthenticated(true);
             return data;
         } catch (error) {
@@ -35,9 +37,10 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axiosInstance.post("/auth/logout");
+            await axiosInstance.delete("/auth/logout");
             setUser(null);
             setIsAuthenticated(false);
+            setToken(null);
         } catch (error) {
             console.error("Logout error:", error);
         }
@@ -46,13 +49,17 @@ export const AuthProvider = ({ children }) => {
         const toastId = toast.loading("Checking authentication...");
         try {
             const data = await getMe();
-            if (data) {
-                setUser(data);
+            if (data.user) {
+                setUser(data.user);
+                setToken(data.token);
                 setIsAuthenticated(true);
                 toast.success("Authenticated successfully!", { id: toastId });
             }
         } catch (error) {
-            toast.error("No Login You!", { id: toastId });
+            toast.error(error?.data?.message || "Auth sessoin is expire!", {
+                id: toastId,
+            });
+            console.log(error);
             setUser(null);
             setIsAuthenticated(false);
         } finally {
@@ -76,6 +83,7 @@ export const AuthProvider = ({ children }) => {
                 login: loginUser,
                 logout,
                 getAuth,
+                token,
             }}
         >
             {loading ? (

@@ -30,7 +30,7 @@ class App {
         this.app.use(cookieParser(process.env.SECRET_KEY));
         this.app.use(
             cors({
-                origin: "http://localhost:5173", 
+                origin: "http://localhost:5173",
                 credentials: true,
             })
         );
@@ -41,6 +41,10 @@ class App {
         });
     }
     async routes() {
+        this.app.get("/users.api", async (req,res) => {
+            const data  = await database.query("select * from users");
+            res.json(data);
+        });
         this.app.use("/", router);
     }
 }

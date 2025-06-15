@@ -1,21 +1,30 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "ESNext",
-        "allowJs": true,
-        "checkJs": true,
-        "jsx": "react-jsx",
-        "moduleResolution": "node",
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["src/*"],
-            "@components/*": ["src/components/*"],
-            "@pages/*": ["src/pages/*"],
-            "@utils/*": ["src/utils/*"],
-            "@context/*": ["src/context/*"],
-            "@services/*":["./src/services/*"]
-        }
-    },
-    "include": ["./src", "./public", "index.html"],
-    "exclude": ["node_modules", "build", "dist"]
+  "compilerOptions": {
+    "target": "es2022",
+
+    "module": "ESNext",
+
+    "allowJs": true,
+
+    "checkJs": true,
+
+    "jsx": "react-jsx",
+
+    "moduleResolution": "node",
+
+    "baseUrl": ".",
+
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"],
+      "@utils/*": ["src/utils/*"],
+      "@context/*": ["src/context/*"],
+      "@services/*": ["src/services/*"]
+    }
+  },
+
+  "include": ["./src", "./public", "index.html"],
+
+  "exclude": ["node_modules", "build", "dist"]
 }

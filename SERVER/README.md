@@ -69,6 +69,15 @@ chat-app/
 
 ---
 
+### ⚒️ Actual Work Or Data Flow
+
+* 🔐 **Connect Soket.io**
+
+  1. when new login user set status login
+  2. 
+
+---
+
 ### ✅ Setup Instructions
 
 1. Clone the repo:

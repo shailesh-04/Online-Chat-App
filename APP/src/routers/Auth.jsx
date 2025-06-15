@@ -8,7 +8,7 @@ export default function Auth() {
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<Register />} />
-             <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 }

@@ -2,20 +2,21 @@ import { Router } from "express";
 import users from "./users.js";
 import auth from "./auth.public.js";
 import authApi from "./auth.js";
+import chatApi from "./chat.js";
+import { catchErr } from "04-utils";
 const router = Router();
 try {
     router.use("/", auth);
     router.use("/api/user", users);
     router.use("/api/auth", authApi);
-    router.get("/api",(req,res)=>{
+    router.use("/api/chat", chatApi);
+    router.get("/api", (req, res) => {
         res.status(200).json({
-            message:"The Api Is Successfuy Connect With Frontend!."
+            message: "The Api Is Successfuy Connect With Frontend!.",
         });
     });
 } catch (error) {
-    console.error(
-        " \x1b[1m error : ~/routes/_index.js \x1b[33m  \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n \x1b[0m",
-        error.message
-    );
+    catchErr(error,"routes/_index.js")
+
 }
 export default router;

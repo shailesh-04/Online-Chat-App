@@ -1,4 +1,4 @@
-import db from "#config/database";
+import db from "#config/database.js";
 class Chat {
     static async createConversation(user1_id, user2_id) {
         const result = await db.query(
@@ -33,23 +33,23 @@ class Chat {
     }
 
     static async getConversations(user_id) {
-        const rows = await db.query(
-            `SELECT c.id as conversation_id, 
-                    CASE WHEN c.user1_id = ? THEN c.user2_id ELSE c.user1_id END as contact_id,
-                    u.name as contact_name, u.avatar as contact_avatar, u.status as contact_status,
-                    m.content as last_message, m.created_at as last_message_time
-             FROM conversations c
-             JOIN users u ON (c.user1_id = u.id OR c.user2_id = u.id) AND u.id != ?
-             LEFT JOIN (
-                 SELECT conversation_id, content, created_at
-                 FROM messages
-                 WHERE id IN (
-                     SELECT MAX(id) FROM messages GROUP BY conversation_id
-                 )
-             ) m ON m.conversation_id = c.id
-             WHERE c.user1_id = ? OR c.user2_id = ?
-             ORDER BY m.created_at DESC`,
-            [user_id, user_id, user_id, user_id]
+            const rows = await db.query(
+                `SELECT c.id as conversation_id, 
+                        CASE WHEN c.user1_id = ? THEN c.user2_id ELSE c.user1_id END as contact_id,
+                        u.name as contact_name, u.avatar as contact_avatar, u.status as contact_status,
+                        m.content as last_message, m.created_at as last_message_time
+                FROM conversations c
+                JOIN users u ON (c.user1_id = u.id OR c.user2_id = u.id) AND u.id != ?
+                LEFT JOIN (
+                    SELECT conversation_id, content, created_at
+                    FROM messages
+                    WHERE id IN (
+                        SELECT MAX(id) FROM messages GROUP BY conversation_id
+                    )
+                ) m ON m.conversation_id = c.id
+                WHERE c.user1_id = ? OR c.user2_id = ?
+                ORDER BY m.created_at DESC`,
+                [user_id, user_id, user_id, user_id]
         );
         return rows;
     }

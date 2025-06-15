@@ -6,16 +6,35 @@
       "#models/*": ["src/database/models/*"],
       "#controllers/*": ["src/controllers/*"],
       "#middlewares/*": ["src/middlewares/*"],
-      "#socketHandlers": ["src/socketHandlers/*"],
-      "#services/*": ["./src/services/*"]
+      "#socketHandlers/*": ["src/socketHandlers/*"],
+      "#services/*": ["src/services/*"]
     },
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es2022",
     "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*", "index.js"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"]
 }
