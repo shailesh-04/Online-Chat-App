@@ -74,7 +74,9 @@ chat-app/
 * 🔐 **Connect Soket.io**
 
   1. when new login user set status login
-  2. 
+  2. when send user message store database and send other user chat
+  3. if user is online but not avalable in message send user that time show message number bage
+  4. 
 
 ---
 
@@ -118,3 +120,6 @@ server and app create,
 create database ;
 create backend;
 implement frontend;
+
+new change
+
