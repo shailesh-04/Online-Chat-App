@@ -120,6 +120,3 @@ server and app create,
 create database ;
 create backend;
 implement frontend;
-
-new change
-
