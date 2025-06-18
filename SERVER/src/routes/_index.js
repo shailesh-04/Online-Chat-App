@@ -17,6 +17,5 @@ try {
     });
 } catch (error) {
     catchErr(error,"routes/_index.js")
-
 }
 export default router;

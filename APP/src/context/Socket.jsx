@@ -8,7 +8,7 @@ import React, {
 import { io } from "socket.io-client";
 import { useAuth } from "./Auth";
 import toast from "react-hot-toast";
-import {getGreeting} from "@utils/greeting"
+import { getGreeting } from "@utils/greeting";
 const SocketContext = createContext();
 export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
@@ -25,7 +25,11 @@ export const SocketProvider = ({ children }) => {
                 });
                 newSocket.on("connect", () => {
                     setIsConnected(true);
-                    toast.success(`Hey ${getGreeting()} ${user?.name}, great to see you! 😄`);
+                    toast.success(
+                        `Hey ${getGreeting()} ${
+                            user?.name
+                        }, great to see you! 😄`
+                    );
                     newSocket.emit("user_connected", { token });
                 });
                 newSocket.on("disconnect", () => {

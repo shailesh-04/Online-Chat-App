@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }) => {
         } finally {
         }
     };
-
     const logout = async () => {
         try {
             await axiosInstance.delete("/auth/logout");
@@ -96,7 +95,6 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context)

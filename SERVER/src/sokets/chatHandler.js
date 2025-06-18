@@ -1,3 +1,4 @@
+import Chat from "#models/chat.js";
 import { verify } from "#services/jwt.js";
 class ChatHandler {
     constructor(io, socket, onlineUsers) {
@@ -37,22 +38,37 @@ class ChatHandler {
         try {
             this.socket.on(
                 "user_chat_message",
-                async ({ to, message, token }) => {
+                async ({ to, message, token, conversation_id }) => {
                     try {
                         const user = await verify(token);
-                        if (
-                            this.onlineUsers[user.id] &&
-                            this.onlineUsers[to].socketId
-                        ) {
+                        if (this.onlineUsers[user.id]) {
+                            const result = await Chat.createMessage(
+                                conversation_id,
+                                user.id,
+                                message
+                            );
                             this.io
-                                .to(this.onlineUsers[to].socketId)
+                                .to(this.onlineUsers[user.id].socketId)
                                 .emit("user_chat_message", {
                                     sender: this.onlineUsers[user.id],
                                     message,
+                                    id: result,
                                 });
+                                
+                            this.onlineUsers[to]?.socketId
+                                ? this.io
+                                      .to(this.onlineUsers[to].socketId)
+                                      .emit("user_chat_message", {
+                                          sender: this.onlineUsers[user.id],
+                                          message,
+                                          id: result,
+                                      })
+                                : "";
                         }
                     } catch (error) {
-                         this.io.emit("socket-error", { message: error.message });
+                        this.io.emit("socket-error", {
+                            message: error.message,
+                        });
                         console.error(error.message);
                     }
                 }

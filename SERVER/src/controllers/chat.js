@@ -14,8 +14,9 @@ class ChatController {
     };
     static getMessages = async (req, res) => {
         try {
+            const userId = req.user;
             const { conversationId } = req.params;
-            const messages = await Chat.getMessages(conversationId);
+            const messages = await Chat.getMessages(conversationId,userId);
             res.json(messages);
         } catch (error) {
             res.status(500).json({ message: "Error fetching messages", error });

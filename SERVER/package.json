@@ -19,7 +19,8 @@
         "#socketHandlers/*": "./src/socketHandlers/*",
         "#middlewares/*": "./src/middlewares/*",
         "#models/*": "./src/database/models/*",
-        "#services/*": "./src/services/*"
+        "#services/*": "./src/services/*",
+        "#sokets/*": "./src/sokets/*"
     },
     "repository": {
         "type": "git",

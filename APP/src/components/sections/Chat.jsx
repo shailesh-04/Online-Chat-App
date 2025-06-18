@@ -3,29 +3,21 @@ import { FaPaperPlane } from "react-icons/fa";
 import { formatChatDate, formatChatDateTime } from "@utils/formatChatDate";
 import { getMessage } from "@services/chat";
 import { useAuth } from "@context/Auth";
+import toast from "react-hot-toast";
 export default function Chat({ activeContact, messageInputRef, socket }) {
     const { user, token } = useAuth();
     const [messageInput, setMessageInput] = useState("");
     const [messages, setMessages] = useState([]);
     const chatMessagesRef = useRef(null);
+
     const sendMessage = () => {
         if (messageInput.trim() && activeContact) {
-            const newMessage = {
-                id: Date.now(),
-                content: messageInput,
-                conversation_id: activeContact.conversation_id,
-                created_at: new Date(),
-                is_read: 0,
-                sender_avatar: user.avatar,
-                sender_id: user.id,
-                sender_name: user.name,
-            };
             socket.emit("user_chat_message", {
                 to: activeContact.contact_id,
                 message: messageInput,
                 token: token,
+                conversation_id: activeContact.conversation_id,
             });
-            setMessages((prev) => [...prev, newMessage]);
             setMessageInput("");
         }
     };
@@ -36,7 +28,6 @@ export default function Chat({ activeContact, messageInputRef, socket }) {
     };
     useEffect(() => {
         if (!activeContact) return;
-
         const getMessageData = async (id) => {
             try {
                 const data = await getMessage(id);
@@ -47,11 +38,13 @@ export default function Chat({ activeContact, messageInputRef, socket }) {
         };
         getMessageData(activeContact.conversation_id);
     }, [activeContact]);
+
     useEffect(() => {
         if (!socket) return;
-        const handleIncomingMessage = ({ message, sender }) => {
+        const handleIncomingMessage = ({ message, sender, id }) => {
+            
             const replyMessage = {
-                id: Date.now(),
+                id: id,
                 content: message,
                 conversation_id: activeContact.conversation_id,
                 created_at: new Date(),
@@ -60,7 +53,6 @@ export default function Chat({ activeContact, messageInputRef, socket }) {
                     sender.avatar ||
                     "https://randomuser.me/api/portraits/women/71.jpg",
                 sender_id: sender.id,
-                sender_name: sender.name,
             };
             setMessages((prev) => [...prev, replyMessage]);
         };
@@ -69,6 +61,7 @@ export default function Chat({ activeContact, messageInputRef, socket }) {
             socket.off("user_chat_message", handleIncomingMessage);
         };
     }, [socket, activeContact]);
+
     useEffect(() => {
         if (chatMessagesRef.current) {
             chatMessagesRef.current.scrollTop =
@@ -90,7 +83,7 @@ export default function Chat({ activeContact, messageInputRef, socket }) {
                         {formatChatDate(activeContact.last_message_time)}
                     </p>
                 </div>
-                {activeContact.contact_status == "offline" ? (
+                {activeContact.contact_status != "offline" ? (
                     ""
                 ) : (
                     <div className="chat-status"></div>

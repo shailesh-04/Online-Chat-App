@@ -2,7 +2,7 @@
 import http from "http";
 import { Server } from "socket.io";
 import app from "#config/app.js";
-import ChatHandler from "../socketHandlers/chatHandler.js";
+import ChatHandler from "#sokets/chatHandler.js";
 export const server = http.createServer(app);
 const io = new Server(server, {
     cors: {

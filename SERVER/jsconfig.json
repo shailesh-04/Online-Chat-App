@@ -6,7 +6,7 @@
       "#models/*": ["src/database/models/*"],
       "#controllers/*": ["src/controllers/*"],
       "#middlewares/*": ["src/middlewares/*"],
-      "#socketHandlers/*": ["src/socketHandlers/*"],
+      "#socketHandlers/*": ["src/sokets/*"],
       "#services/*": ["src/services/*"]
     },
     "module": "esnext",

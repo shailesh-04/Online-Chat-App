@@ -1,6 +1,9 @@
-import React from "react";
-
-export default function SpinnerButton({ isLoading, loadingText = "Loading...", children, ...props }) {
+export default function SpinnerButton({
+    isLoading,
+    loadingText = "Loading...",
+    children,
+    ...props
+}) {
     return (
         <button
             disabled={isLoading}

@@ -13,7 +13,6 @@ const ChatApp = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeContact, setActiveContact] = useState(null);
     const [contacts, setContacts] = useState([]);
-
     const messageInputRef = useRef(null);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const handleFabClick = () => messageInputRef.current?.focus();
@@ -39,9 +38,11 @@ const ChatApp = () => {
             toast.success(`${activeContact.name} is now online`);
         }
     }, [onlineUserIds, activeContact]);
+    const didRun = useRef(false);
     useEffect(() => {
-        getConversationsData();
-    }, [socket]);
+        didRun.current?getConversationsData():'';
+        didRun.current = true;
+    }, []);
     return (
         <div className="chat-app">
             <button className="menu-toggle" onClick={toggleMenu}>
