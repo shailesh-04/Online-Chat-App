@@ -41,8 +41,7 @@ export default function Chat({ activeContact, messageInputRef, socket }) {
 
     useEffect(() => {
         if (!socket) return;
-        const handleIncomingMessage = ({ message, sender, id }) => {
-            
+        const handleIncomingMessage = ({ sender, message, id }) => {
             const replyMessage = {
                 id: id,
                 content: message,
@@ -50,9 +49,9 @@ export default function Chat({ activeContact, messageInputRef, socket }) {
                 created_at: new Date(),
                 is_read: 0,
                 sender_avatar:
-                    sender.avatar ||
+                    sender?.avatar ||
                     "https://randomuser.me/api/portraits/women/71.jpg",
-                sender_id: sender.id,
+                sender_id: sender,
             };
             setMessages((prev) => [...prev, replyMessage]);
         };

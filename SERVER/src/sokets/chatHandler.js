@@ -7,6 +7,7 @@ class ChatHandler {
         this.onlineUsers = onlineUsers;
         this.auth();
         this.chat();
+        this.changeConvesatoin();
     }
     async auth() {
         try {
@@ -15,6 +16,7 @@ class ChatHandler {
                 this.onlineUsers[user.id] = {
                     socketId: this.socket.id,
                     name: user.email,
+                    activeConvesation: "",
                 };
                 console.log(`User Logged In: ${user.email} (${user.id})`);
                 this.io.emit("online_user", Object.keys(this.onlineUsers));
@@ -47,29 +49,64 @@ class ChatHandler {
                                 user.id,
                                 message
                             );
+
                             this.io
                                 .to(this.onlineUsers[user.id].socketId)
                                 .emit("user_chat_message", {
-                                    sender: this.onlineUsers[user.id],
+                                    sender: user.id,
                                     message,
                                     id: result,
                                 });
-                                
-                            this.onlineUsers[to]?.socketId
-                                ? this.io
-                                      .to(this.onlineUsers[to].socketId)
-                                      .emit("user_chat_message", {
-                                          sender: this.onlineUsers[user.id],
-                                          message,
-                                          id: result,
-                                      })
-                                : "";
+                            if (
+                                this.onlineUsers[to].activeConvesation ==
+                                user.id
+                            ) {
+                                this.onlineUsers[to]?.socketId
+                                    ? this.io
+                                          .to(this.onlineUsers[to].socketId)
+                                          .emit("user_chat_message", {
+                                              sender: user.id,
+                                              message,
+                                              id: result,
+                                          })
+                                    : "";
+                            } else {
+                                this.onlineUsers[to]?.socketId
+                                    ? this.io
+                                          .to(this.onlineUsers[to].socketId)
+                                          .emit("user_chat_count", {
+                                              sender: user.id,
+                                              message,
+                                              data: result,
+                                          })
+                                    : "";
+                            }
                         }
                     } catch (error) {
                         this.io.emit("socket-error", {
                             message: error.message,
                         });
                         console.error(error.message);
+                    }
+                }
+            );
+        } catch (error) {
+            this.io.emit("sekot-error", { message: error.message });
+            console.log(error.message);
+        }
+    }
+    async changeConvesatoin() {
+        try {
+            this.socket.on(
+                "change-conversation",
+                async ({ token, id, conversation_id }) => {
+                    if (token && id && conversation_id) {
+                        const user = await verify(token);
+                        await Chat.readMessage(conversation_id, user);
+                        this.onlineUsers[user.id] = {
+                            ...this.onlineUsers[user.id],
+                            activeConvesation: id,
+                        };
                     }
                 }
             );

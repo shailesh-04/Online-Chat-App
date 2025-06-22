@@ -8,7 +8,7 @@ import Chat from "@components/sections/Chat";
 import { MdExitToApp } from "react-icons/md";
 import { useSocket } from "../context/Socket";
 const ChatApp = () => {
-    const { user, logout } = useAuth();
+    const { user, logout, token } = useAuth();
     const { socket, isConnected, onlineUserIds } = useSocket();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeContact, setActiveContact] = useState(null);
@@ -16,10 +16,28 @@ const ChatApp = () => {
     const messageInputRef = useRef(null);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const handleFabClick = () => messageInputRef.current?.focus();
+
     const selectContact = (contact) => {
         setActiveContact(contact);
+        socket.emit("change-conversation", {
+            token,
+            id: contact.contact_id,
+            conversation_id: contact.conversation_id,
+        });
+        setContacts((prev) => {
+            return prev.map((cnt) => {
+                if (cnt.contact_id === contact.contact_id) {
+                    return {
+                        ...cnt,
+                        unread_count: 0,
+                    };
+                }
+                return cnt;
+            });
+        });
         if (window.innerWidth < 768) setIsMenuOpen(false);
     };
+
     const getConversationsData = async () => {
         try {
             const data = await getConversations();
@@ -40,7 +58,7 @@ const ChatApp = () => {
     }, [onlineUserIds, activeContact]);
     const didRun = useRef(false);
     useEffect(() => {
-        didRun.current?getConversationsData():'';
+        didRun.current ? getConversationsData() : "";
         didRun.current = true;
     }, []);
     return (
@@ -93,6 +111,7 @@ const ChatApp = () => {
                         selectContact={selectContact}
                         activeContact={activeContact}
                         onlineUserIds={onlineUserIds}
+                        setContacts={setContacts}
                     />
                 </div>
 

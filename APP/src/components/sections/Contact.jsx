@@ -1,17 +1,33 @@
 import { formatChatDate } from "@utils/formatChatDate";
 import { useSocket } from "@context/Socket";
+import { useEffect } from "react";
 export default function Contact({
     contacts,
     selectContact,
     activeContact,
     onlineUserIds,
+    setContacts,
 }) {
     const { socket } = useSocket();
     useEffect(() => {
         if (!socket) return;
 
+        socket.on("user_chat_count", (payload) => {
+            setContacts((prev) => {
+                return prev.map((cnt) => {
+                    if (cnt.contact_id === payload.sender) {
+                        return {
+                            ...cnt,
+                            unread_count: (cnt.unread_count || 0) + 1,
+                        };
+                    }
+                    return cnt;
+                });
+            });
+        });
+
         return () => {
-            socket.off("user_chat_message", handleIncomingMessage);
+            socket.off("user_chat_count");
         };
     }, [socket]);
 
@@ -52,7 +68,6 @@ export default function Contact({
                     ) : (
                         ""
                     )}
-
                     {onlineUserIds?.includes(contact.contact_id.toString()) ? (
                         <div className="w-2 h-2 bg-green-400 rounded-full shadow-2xl absolute top-2 left-2"></div>
                     ) : null}

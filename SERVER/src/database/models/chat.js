@@ -23,11 +23,17 @@ class Chat {
         );
         return result.insertId;
     }
-
-    static async getMessages(conversation_id, user_id) {
+    static async readMessage(conversation_id,user) {
+        const result = await db.query(
+            "update messages set is_read = true  where conversation_id = ? and sender_id != ?",
+            [conversation_id, user.id]
+        );
+        return result;
+    }
+    static async getMessages(conversation_id, user) {
         await db.query(
             "update messages set is_read = true  where conversation_id = ? and sender_id != ?",
-            [conversation_id, user_id.id]
+            [conversation_id, user.id]
         );
         const rows = await db.query(
             "SELECT m.*, u.name as sender_name, u.avatar as sender_avatar FROM messages m JOIN users u ON m.sender_id = u.id WHERE m.conversation_id = ? ORDER BY m.created_at",
